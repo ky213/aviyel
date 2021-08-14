@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
+import { Invoice } from 'libs/interfaces/invoice';
 import { InvoiceService } from './invoice.service';
 
 @Controller('invoice')
@@ -30,7 +31,7 @@ export class InvoiceController {
   }
 
   @Post()
-  async createInvoice(@Body() invoice) {
+  async createInvoice(@Body() invoice: Invoice) {
     try {
       return await this.invoiceService.createInvoice(invoice);
     } catch (error) {

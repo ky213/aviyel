@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { InvoiceDocument } from './invoice.model';
+
+import { InvoiceDocument } from 'libs/interfaces/invoice';
 
 @Injectable()
 export class InvoiceService {
