@@ -12,4 +12,12 @@ export class InvoiceService {
   async geAll(): Promise<InvoiceDocument[]> {
     return this.invoiceModel.find().exec();
   }
+
+  async getById(id: string): Promise<InvoiceDocument> {
+    return this.invoiceModel.findById(id).exec();
+  }
+
+  async createInvoice(invoice): Promise<InvoiceDocument> {
+    return this.invoiceModel.create(invoice);
+  }
 }

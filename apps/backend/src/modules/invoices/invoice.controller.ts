@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
 import { InvoiceService } from './invoice.service';
 
@@ -21,12 +21,20 @@ export class InvoiceController {
   }
 
   @Get('/:id')
-  getInvoiceById(@Param('id') id: string) {
-    return 'hello invoice ' + id;
+  async getInvoiceById(@Param('id') id: string) {
+    try {
+      return await this.invoiceService.getById(id);
+    } catch (error) {
+      return error;
+    }
   }
 
   @Post()
-  createInvoice() {
-    return 'create invoice';
+  async createInvoice(@Body() invoice) {
+    try {
+      return await this.invoiceService.createInvoice(invoice);
+    } catch (error) {
+      return error;
+    }
   }
 }
