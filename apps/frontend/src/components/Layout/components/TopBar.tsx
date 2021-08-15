@@ -15,7 +15,9 @@ const Title = styled(NavLink)`
   margin-left: 2%;
   color: white;
   font-size: 25px;
-  font-family: monospace, sans-serif;
+  font-family: sans-serif;
+  font-weight: lighter;
+  letter-spacing: 1px;
 `;
 
 const RoundedButton = styled.button`
