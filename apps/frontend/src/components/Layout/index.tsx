@@ -1,13 +1,14 @@
 import React from 'react';
 
-import ErrorBoundary from '../ErrorBoundary';
-import { Container, TopBar } from './components/';
+import { Container, TopBar, Body } from './components/';
 
 export const MainLayout = (props: any) => {
   return (
     <Container>
       <TopBar />
-      <ErrorBoundary>{props.children}</ErrorBoundary>
+      <Body>
+        <h1>heelo</h1>
+      </Body>
     </Container>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ErrorBoundary from '../../ErrorBoundary';
 
 const ContainerStyled = styled.div`
   width: 100%;
@@ -10,7 +11,11 @@ const ContainerStyled = styled.div`
 `;
 
 function TopBar(props: any) {
-  return <ContainerStyled>{props.children}</ContainerStyled>;
+  return (
+    <ContainerStyled>
+      <ErrorBoundary>{props.children}</ErrorBoundary>
+    </ContainerStyled>
+  );
 }
 
 export default TopBar;

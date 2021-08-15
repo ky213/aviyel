@@ -13,7 +13,7 @@ const TopBarStyled = styled.div`
 const Title = styled.h3`
   margin-left: 2%;
   color: white;
-  font-family: sans-serif;
+  font-family: monospace, sans-serif;
 `;
 
 const RoundedButton = styled.button`
@@ -29,6 +29,7 @@ const RoundedButton = styled.button`
   border-radius: 50%;
   color: white;
   background-color: #ff64a4;
+  font-size: 40px;
   font-weight: bold;
   font-family: monospace;
   cursor: pointer;
