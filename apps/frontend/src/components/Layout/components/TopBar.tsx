@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const TopBarStyled = styled.div`
@@ -10,9 +11,10 @@ const TopBarStyled = styled.div`
   background-color: #336399;
 `;
 
-const Title = styled.h3`
+const Title = styled(NavLink)`
   margin-left: 2%;
   color: white;
+  font-size: 25px;
   font-family: monospace, sans-serif;
 `;
 
@@ -41,10 +43,10 @@ const RoundedButton = styled.button`
 function TopBar() {
   return (
     <TopBarStyled>
-      <Title>Dashboard</Title>
-      <RoundedButton title="create invoice">
-        <span>+</span>
-      </RoundedButton>
+      <Title to="/">Dashboard</Title>
+      <NavLink to="/invoice/create">
+        <RoundedButton title="create invoice">+</RoundedButton>
+      </NavLink>
     </TopBarStyled>
   );
 }

@@ -6,9 +6,7 @@ export const MainLayout = (props: any) => {
   return (
     <Container>
       <TopBar />
-      <Body>
-        <h1>heelo</h1>
-      </Body>
+      <Body>{props.children}</Body>
     </Container>
   );
 };
