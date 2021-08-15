@@ -1,11 +1,15 @@
 import React from 'react';
 
 import ErrorBoundary from '../ErrorBoundary';
+import { Container, TopBar } from './components/';
 
-export interface MainLayoutProps extends React.PropsWithChildren<any> {}
-
-export const MainLayout = (props: MainLayoutProps) => {
-  return <ErrorBoundary>{props.children}</ErrorBoundary>;
+export const MainLayout = (props: any) => {
+  return (
+    <Container>
+      <TopBar />
+      <ErrorBoundary>{props.children}</ErrorBoundary>
+    </Container>
+  );
 };
 
 export default MainLayout;
