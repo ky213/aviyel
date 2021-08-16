@@ -4,6 +4,8 @@ import { Dialog, useMediaQuery } from '@material-ui/core';
 
 import { Header, Body, Footer } from './components';
 
+import './styles/invoice.module.css';
+
 function CreateInvoice() {
   const [open, setOpen] = React.useState(true);
   const theme = useTheme();

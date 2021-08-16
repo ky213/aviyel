@@ -12,7 +12,7 @@ const Form = styled.form`
   border-bottom: 1px solid lightgray;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   width: ${({ width }) => width};
   height: 30px;
   padding: 1px 5px;

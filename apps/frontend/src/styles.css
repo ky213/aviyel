@@ -17,4 +17,14 @@ a {
 #create-invoice-dialog .MuiPaper-root {
   max-width: 100% !important;
   width: 60%;
+  height: 70%;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
