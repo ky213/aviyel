@@ -2,6 +2,8 @@ import React from 'react';
 import styled, { StyledComponent } from 'styled-components';
 import { DialogContent } from '@material-ui/core';
 
+import { ProductForm } from '.';
+
 const Title = styled.h3`
   margin: 0 auto 10px 5px;
   font-family: sans-serif;
@@ -61,6 +63,7 @@ function Body() {
           </Tr>
         </Tbody>
       </Table>
+      <ProductForm />
     </DialogContent>
   );
 }

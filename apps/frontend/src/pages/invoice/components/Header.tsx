@@ -47,10 +47,10 @@ const CustomerDetails = styled.div`
     margin: 0 10px;
     padding: 5px;
     cursor: pointer;
+    border-radius: 4px;
     &:hover {
       box-shadow: 0px 0px 5px grey;
       background-color: rgba(25, 118, 210, 0.04);
-      border-radius: 4px;
     }
   }
 `;
