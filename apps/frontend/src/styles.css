@@ -12,3 +12,8 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+#create-invoice-dialog .MuiPaper-root {
+  max-width: 100% !important;
+  width: 60%;
+}
