@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import EnterIcon from 'apps/frontend/src/assets/enter-icon.png';
 
+const Container = styled.div``;
+
 const Form = styled.form`
   display: flex;
   justify-content: space-between;
@@ -40,14 +42,16 @@ const SubmitButton = styled.button`
 
 function ProductForm() {
   return (
-    <Form>
-      <Input type="text" width="60%" placeholder="Please enter item name" />
-      <Input type="number" width="10%" placeholder="0.00" />
-      <Input type="number" width="10%" placeholder="0.00" />
-      <SubmitButton type="submit">
-        <img src={EnterIcon} alt="submit" />
-      </SubmitButton>
-    </Form>
+    <Container>
+      <Form>
+        <Input type="text" width="60%" placeholder="Please enter item name" />
+        <Input type="number" width="10%" placeholder="0.00" />
+        <Input type="number" width="10%" placeholder="0.00" />
+        <SubmitButton type="submit">
+          <img src={EnterIcon} alt="submit" />
+        </SubmitButton>
+      </Form>
+    </Container>
   );
 }
 

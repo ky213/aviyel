@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { Dialog, useMediaQuery } from '@material-ui/core';
 
-import { Header, Body, Footer } from './components';
+import { Header, Content } from './components';
 
 function CreateInvoice() {
   const [open, setOpen] = React.useState(true);
@@ -24,8 +24,7 @@ function CreateInvoice() {
       style={{ maxWidth: '100% !important', width: '100% !important' }}
     >
       <Header handleClose={handleClose} />
-      <Body />
-      <Footer />
+      <Content />
     </Dialog>
   );
 }

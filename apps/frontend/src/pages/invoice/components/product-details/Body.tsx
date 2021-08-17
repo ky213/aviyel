@@ -2,12 +2,7 @@ import React from 'react';
 import styled, { StyledComponent } from 'styled-components';
 import { DialogContent } from '@material-ui/core';
 
-import { ProductForm } from '.';
-
-const Title = styled.h3`
-  margin: 0 auto 10px 5px;
-  font-family: sans-serif;
-`;
+import ProductItemForm from './ProductItemForm';
 
 const Table = styled.table`
   width: 100%;
@@ -46,7 +41,6 @@ const Tbody = styled.tbody``;
 function Body() {
   return (
     <DialogContent>
-      <Title>Product Details</Title>
       <Table>
         <Thead>
           <tr>
@@ -63,7 +57,7 @@ function Body() {
           </Tr>
         </Tbody>
       </Table>
-      <ProductForm />
+      <ProductItemForm />
     </DialogContent>
   );
 }

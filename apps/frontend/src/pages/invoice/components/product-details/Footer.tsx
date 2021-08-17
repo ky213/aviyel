@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { StyledComponent } from 'styled-components';
 import { DialogActions } from '@material-ui/core';
 
-import { Input } from './ProductForm';
+import { Input } from './ProductItemForm';
 
 const Container = styled(DialogActions)``;
 
@@ -89,7 +89,7 @@ const Button: StyledComponent<any, any> = styled.button`
   border-radius: 4px;
   background: ${({ primary }: any) => (primary ? '#66a7ff' : 'white')};
   color: white;
-  width: 135;
+  width: 135px;
   height: 40px;
   padding: 5px;
   cursor: pointer;
