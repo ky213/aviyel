@@ -23,7 +23,6 @@ export const Input = styled.input`
   border-radius: 4px;
   outline: 0;
   font-size: 16px;
-  color: lightgray;
   &:focus {
     border: 2px solid #66a7ff;
   }

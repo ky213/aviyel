@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 
 import Header from './Header';
 import Body from './Body';
 import Footer from './Footer';
 
-export default function ProductDetails() {
+export interface ProductDetailsProps extends ComponentProps<any> {
+  next: () => void;
+}
+
+export default function ProductDetails(props: ProductDetailsProps) {
   return (
     <>
-      <Header />
+      <Header next={props.next} />
       <Body />
       <Footer />
     </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import styled from 'styled-components';
 
 import EditIcon from 'apps/frontend/src/assets/edit.png';
@@ -50,7 +50,11 @@ const CustomerDetails = styled.div`
   }
 `;
 
-export default function Header() {
+export interface HeaderProps extends ComponentProps<any> {
+  next: () => void;
+}
+
+export default function Header(props: HeaderProps) {
   return (
     <Container>
       <Title>Product Details</Title>
@@ -61,7 +65,7 @@ export default function Header() {
             <h3>Jhon Doe</h3>
             <p>jhondoe@gmail.com</p>
           </div>
-          <img src={EditIcon} alt="edit" />
+          <img src={EditIcon} alt="edit" onClick={props.next} />
         </div>
       </CustomerDetails>
     </Container>

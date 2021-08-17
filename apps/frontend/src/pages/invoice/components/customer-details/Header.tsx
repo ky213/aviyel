@@ -31,11 +31,11 @@ const SkipButton = styled.button`
   }
 `;
 
-export default function Header() {
+export default function Header(props: any) {
   return (
     <Container>
       <Title>Customer details</Title>
-      <SkipButton>
+      <SkipButton onClick={props.next}>
         <span>SKIP </span>
         <img src={SkipIcon} alt="skip-icon" />
       </SkipButton>
