@@ -19,6 +19,7 @@ export const Input = styled.input`
   margin-right: auto;
   border: 1px solid lightgray;
   border-radius: 4px;
+  outline: 0;
   font-size: 16px;
   color: lightgray;
   &:focus {
