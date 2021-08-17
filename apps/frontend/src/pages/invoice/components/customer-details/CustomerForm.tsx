@@ -1,24 +1,31 @@
 import React from 'react';
-import styled, { StyledComponent } from 'styled-components';
+import styled from 'styled-components';
 
 const Container = styled.form`
   display: flex;
   justify-content: space-around;
   margin: 5px auto;
   width: 94%;
+  height: 100%;
 `;
 
 const FirstSection = styled.div`
   width: 45%;
+  height: 90%;
 `;
+
 const SecondSection = styled.div`
   width: 45%;
+  height: 90%;
   position: relative;
 `;
 
 const TextField = styled.div`
   width: 100%;
   margin: 15px auto;
+  & textarea {
+    height: 100% !important;
+  }
 `;
 
 const Label = styled.label`
@@ -77,10 +84,10 @@ export default function CustomerForm() {
         <TextField>
           <Label htmlFor="address">Address</Label>
           <TextArea
-            rows={7}
             name="address"
             id="address"
             placeholder="complete address"
+            rows={7}
             required
           />
         </TextField>
@@ -104,7 +111,7 @@ export default function CustomerForm() {
             required
           />
         </TextField>
-        <TextField style={{ position: 'absolute', bottom: 0, width: '50%' }}>
+        <TextField style={{ position: 'absolute', bottom: 20, width: '50%' }}>
           <Label htmlFor="pincode">Pincode</Label>
           <Input
             type="number"
