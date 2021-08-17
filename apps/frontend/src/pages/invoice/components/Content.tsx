@@ -1,11 +1,13 @@
 import React from 'react';
 
-import ProducDetails from './product-details';
+import CustomerDetails from './customer-details';
+import ProductDetails from './product-details';
 
 export default function Body() {
   return (
     <>
-      <ProducDetails />
+      <CustomerDetails />
+      {/* <ProductDetails /> */}
     </>
   );
 }
