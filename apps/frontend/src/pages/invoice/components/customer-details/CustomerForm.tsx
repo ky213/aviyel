@@ -1,5 +1,6 @@
 import React, { ComponentProps } from 'react';
 import styled from 'styled-components';
+import { ErrorMessage } from 'formik';
 
 import { Customer } from 'libs/interfaces/invoice';
 
@@ -62,6 +63,11 @@ const TextArea = styled.textarea`
   }
 `;
 
+const ErroMessage = styled.span`
+  color: red;
+  font-size: 12px;
+`;
+
 export interface ICustomerFormValues extends Customer {
   pincode: string | number | readonly string[] | undefined;
 }
@@ -87,6 +93,9 @@ export default function CustomerForm(props: ICustomerFormProps) {
             value={props.values.fullName}
             onChange={props.onFieldChange}
           />
+          <ErroMessage>
+            {props.touched.fullName && props.errors.fullName}
+          </ErroMessage>
         </TextField>
         <TextField>
           <Label htmlFor="address">Address</Label>
@@ -98,6 +107,9 @@ export default function CustomerForm(props: ICustomerFormProps) {
             value={props.values.address}
             onChange={props.onFieldChange}
           />
+          <ErroMessage>
+            {props.touched.address && props.errors.address}
+          </ErroMessage>
         </TextField>
       </FirstSection>
       <SecondSection>
@@ -112,6 +124,7 @@ export default function CustomerForm(props: ICustomerFormProps) {
             value={props.values.phone}
             onChange={props.onFieldChange}
           />
+          <ErroMessage>{props.touched.phone && props.errors.phone}</ErroMessage>
         </TextField>
         <TextField>
           <Label htmlFor="email">
@@ -125,6 +138,7 @@ export default function CustomerForm(props: ICustomerFormProps) {
             value={props.values.email}
             onChange={props.onFieldChange}
           />
+          <ErroMessage>{props.touched.email && props.errors.email}</ErroMessage>
         </TextField>
         <TextField style={{ position: 'absolute', bottom: 0, width: '50%' }}>
           <Label htmlFor="pincode">Pincode</Label>
