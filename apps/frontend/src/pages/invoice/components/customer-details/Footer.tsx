@@ -38,7 +38,9 @@ export default function Footer() {
   return (
     <Container>
       <Background>
-        <Button primary>Proceed</Button>
+        <Button type="submit" primary>
+          Proceed
+        </Button>
       </Background>
     </Container>
   );

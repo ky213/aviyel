@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import styled from 'styled-components';
 
-const Container = styled.form`
+import { Customer } from 'libs/interfaces/invoice';
+
+const Container = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 5px auto;
   width: 94%;
-  height: 100%;
 `;
 
 const FirstSection = styled.div`
   width: 45%;
-  height: 90%;
 `;
 
 const SecondSection = styled.div`
   width: 45%;
-  height: 90%;
   position: relative;
 `;
 
@@ -63,7 +62,16 @@ const TextArea = styled.textarea`
   }
 `;
 
-export default function CustomerForm() {
+export interface ICustomerFormValues extends Customer {
+  pincode: string | number | readonly string[] | undefined;
+}
+
+export interface ICustomerFormProps extends ComponentProps<any> {
+  onFieldChange: (event: React.ChangeEvent<any>) => void;
+  values: ICustomerFormValues;
+}
+
+export default function CustomerForm(props: ICustomerFormProps) {
   return (
     <Container>
       <FirstSection>
@@ -76,7 +84,8 @@ export default function CustomerForm() {
             name="fullName"
             id="fullName"
             placeholder="customer name"
-            required
+            value={props.values.fullName}
+            onChange={props.onFieldChange}
           />
         </TextField>
         <TextField>
@@ -86,7 +95,8 @@ export default function CustomerForm() {
             id="address"
             placeholder="complete address"
             rows={7}
-            required
+            value={props.values.address}
+            onChange={props.onFieldChange}
           />
         </TextField>
       </FirstSection>
@@ -95,7 +105,13 @@ export default function CustomerForm() {
           <Label htmlFor="phone">
             Phone Number <span>*</span>
           </Label>
-          <Input type="text" name="phone" id="phone" required />
+          <Input
+            type="text"
+            name="phone"
+            id="phone"
+            value={props.values.phone}
+            onChange={props.onFieldChange}
+          />
         </TextField>
         <TextField>
           <Label htmlFor="email">
@@ -106,17 +122,19 @@ export default function CustomerForm() {
             name="email"
             id="email"
             placeholder="customer email address"
-            required
+            value={props.values.email}
+            onChange={props.onFieldChange}
           />
         </TextField>
-        <TextField style={{ position: 'absolute', bottom: 20, width: '50%' }}>
+        <TextField style={{ position: 'absolute', bottom: 0, width: '50%' }}>
           <Label htmlFor="pincode">Pincode</Label>
           <Input
             type="number"
             name="pincode"
             id="pincode"
             placeholder="560067"
-            required
+            value={props.values.pincode}
+            onChange={props.onFieldChange}
           />
         </TextField>
       </SecondSection>
