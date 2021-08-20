@@ -3,10 +3,15 @@ import promiseMiddleware from 'redux-promise-middleware';
 import thunkMiddleWare from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { InvoiceReducer } from './reducers';
+import { invoice } from './reducers';
+import { InvoiceSate } from './reducers/invoice.reducer';
+
+export interface IRootState {
+  invoice: InvoiceSate;
+}
 
 const reducers = combineReducers({
-  InvoiceReducer,
+  invoice,
 });
 
 export const store = createStore(

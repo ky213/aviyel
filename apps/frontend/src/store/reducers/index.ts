@@ -1,1 +1,1 @@
-export { default as InvoiceReducer } from './invoice.reducer';
+export { default as invoice } from './invoice.reducer';

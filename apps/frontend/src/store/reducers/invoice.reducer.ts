@@ -4,7 +4,7 @@ import {
   FAILURE,
 } from 'apps/frontend/src/utils/actionPrefix';
 
-import { Invoice } from 'libs/interfaces/invoice';
+import { Invoice, Product } from 'libs/interfaces/invoice';
 
 export interface InvoiceSate {
   invoiceList: Invoice[];
@@ -24,6 +24,7 @@ export const INVOICE_ACTIONS = {
   GET_ALL: 'invoice/GET_ALL',
   GET_ONE: 'invoice/GET_ONE',
   CREATE: 'invoice/CREATE',
+  ADD_PRODUCT: 'invoice/ADD_PRODUCT',
   RESET: 'invoice/RESET',
 };
 
@@ -68,6 +69,13 @@ export default (state = initialState, { type, payload }: Action) => {
         success: true,
       };
     }
+    case INVOICE_ACTIONS.ADD_PRODUCT: {
+      const currentInvoice = { ...state.currentInvoice };
+
+      currentInvoice.products?.push(payload);
+
+      return { ...state, currentInvoice: currentInvoice };
+    }
     case INVOICE_ACTIONS.RESET: {
       return { ...initialState };
     }
@@ -75,6 +83,11 @@ export default (state = initialState, { type, payload }: Action) => {
       return state;
   }
 };
+
+export const addProduct = (product: Product) => ({
+  type: INVOICE_ACTIONS.ADD_PRODUCT,
+  payload: product,
+});
 
 export const resetinvoiceState = () => ({
   type: INVOICE_ACTIONS.RESET,

@@ -1,8 +1,10 @@
 import React from 'react';
 import styled, { StyledComponent } from 'styled-components';
 import { DialogContent } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 import ProductItemForm from './ProductItemForm';
+import { IRootState } from 'apps/frontend/src/store';
 
 const Table = styled.table`
   width: 100%;
@@ -39,6 +41,8 @@ const Td: StyledComponent<any, any> = styled.td`
 const Tbody = styled.tbody``;
 
 function Body() {
+  const { currentInvoice } = useSelector((state: IRootState) => state.invoice);
+
   return (
     <DialogContent>
       <Table>
@@ -50,11 +54,13 @@ function Body() {
           </tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td left>bidoun zit</Td>
-            <Td right>2254</Td>
-            <Td right>2</Td>
-          </Tr>
+          {currentInvoice?.products.map((product, index) => (
+            <Tr key={index}>
+              <Td>{product.productName}</Td>
+              <Td>{product.quantity}</Td>
+              <Td>{product.cost}</Td>
+            </Tr>
+          ))}
         </Tbody>
       </Table>
       <ProductItemForm />
