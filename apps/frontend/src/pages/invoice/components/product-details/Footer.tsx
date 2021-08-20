@@ -1,10 +1,13 @@
 import React from 'react';
 import styled, { StyledComponent } from 'styled-components';
 import { DialogActions } from '@material-ui/core';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import { Input } from './ProductItemForm';
+import { TextField, FieldError } from '../common/Styles';
 
-const Container = styled(DialogActions)``;
+const Form = styled.form``;
 
 const Total = styled.div`
   display: flex;
@@ -19,7 +22,6 @@ const Total = styled.div`
 
 const InputWithIcon = styled.span`
   position: relative;
-  margin: 2px 5px;
   & span {
     position: absolute;
     right: 10px;
@@ -28,7 +30,9 @@ const InputWithIcon = styled.span`
 `;
 
 const Taxes = styled.div`
-  width: 60%;
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
 `;
 
 const SubTotal = styled.div`
@@ -99,46 +103,82 @@ const Button: StyledComponent<any, any> = styled.button`
 `;
 
 function Footer() {
+  const formik = useFormik({
+    initialValues: {
+      tax: '',
+      discount: '',
+    },
+    validationSchema: Yup.object().shape({
+      tax: Yup.number().required('number required'),
+      discount: Yup.number().required('number required'),
+    }),
+    onSubmit(values) {
+      console.log(formik.touched, formik.errors);
+    },
+  });
+
   return (
-    <Container>
-      <Total>
-        <Taxes>
-          <InputWithIcon>
-            <Input type="number" placeholder="Tax" width="20%" />
-            <span>%</span>
-          </InputWithIcon>
-          <InputWithIcon>
-            <Input placeholder="Discount" width="23%" />
-            <span>%</span>
-          </InputWithIcon>
-        </Taxes>
-        <SubTotal>
-          <span>Sub Total</span>
-          <span>$ 45.00</span>
-        </SubTotal>
-      </Total>
-      <Result>
-        <div>
+    <DialogActions>
+      <Form onSubmit={formik.handleSubmit} noValidate>
+        <Total>
+          <Taxes>
+            <TextField width="30%" style={{ marginRight: '5px' }}>
+              <InputWithIcon>
+                <Input
+                  type="number"
+                  name="tax"
+                  placeholder="Tax"
+                  onChange={formik.handleChange}
+                />
+                <span>%</span>
+              </InputWithIcon>
+              <FieldError>{formik.touched.tax && formik.errors.tax}</FieldError>
+            </TextField>
+            <TextField width="30%">
+              <InputWithIcon>
+                <Input
+                  type="number"
+                  name="discount"
+                  placeholder="Discount"
+                  onChange={formik.handleChange}
+                />
+                <span>%</span>
+              </InputWithIcon>
+              <FieldError>
+                {formik.touched.discount && formik.errors.discount}
+              </FieldError>
+            </TextField>
+          </Taxes>
+          <SubTotal>
+            <span>Sub Total</span>
+            <span>$ 45.00</span>
+          </SubTotal>
+        </Total>
+        <Result>
           <div>
-            <p>Tax</p>
-            <p>$ 0.00</p>
+            <div>
+              <p>Tax</p>
+              <p>$ 0.00</p>
+            </div>
+            <div>
+              <p>Discount</p>
+              <p>$ 0.00</p>
+            </div>
           </div>
           <div>
-            <p>Discount</p>
-            <p>$ 0.00</p>
+            <div>
+              <p>Grand Total</p>
+              <p>$ 45.00</p>
+            </div>
+            <div>
+              <Button type="submit" primary>
+                Save
+              </Button>
+            </div>
           </div>
-        </div>
-        <div>
-          <div>
-            <p>Grand Total</p>
-            <p>$ 45.00</p>
-          </div>
-          <div>
-            <Button primary>Save</Button>
-          </div>
-        </div>
-      </Result>
-    </Container>
+        </Result>
+      </Form>
+    </DialogActions>
   );
 }
 

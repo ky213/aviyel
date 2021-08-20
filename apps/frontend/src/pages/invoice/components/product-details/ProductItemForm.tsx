@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import EnterIcon from 'apps/frontend/src/assets/enter-icon.png';
-import { FieldError } from '../common/Styles';
+import { TextField, FieldError } from '../common/Styles';
 
 const Form = styled.form`
   display: flex;
@@ -13,10 +13,6 @@ const Form = styled.form`
   margin: auto;
   padding: 10px 0px;
   border-bottom: 1px solid lightgray;
-`;
-
-const TextField: StyledComponent<any, any> = styled.div`
-  width: ${({ width }: any) => width};
 `;
 
 export const Input = styled.input`
@@ -38,6 +34,7 @@ const SubmitButton = styled.button`
   border-radius: 4px;
   background: white;
   width: 40px;
+  height: 30px;
   cursor: pointer;
   &:hover {
     background: rgba(25, 118, 210, 0.04);

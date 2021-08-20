@@ -15,6 +15,8 @@ export interface Invoice {
   invoiceNumber: string;
   customer: Customer;
   products: Product[];
+  tax: number | string;
+  discount: number | string;
 }
 
 export interface InvoiceDocument extends Invoice, Document {}
