@@ -2,6 +2,8 @@ import React, { ComponentProps } from 'react';
 import styled from 'styled-components';
 
 import EditIcon from 'apps/frontend/src/assets/edit.png';
+import { IRootState } from 'apps/frontend/src/store';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   display: flex;
@@ -55,6 +57,10 @@ export interface HeaderProps extends ComponentProps<any> {
 }
 
 export default function Header(props: HeaderProps) {
+  const currentInvoice = useSelector(
+    (state: IRootState) => state.invoice.currentInvoice
+  );
+
   return (
     <Container>
       <Title>Product Details</Title>
@@ -62,8 +68,8 @@ export default function Header(props: HeaderProps) {
         <div>
           <div>
             <p>Customer Details</p>
-            <h3>Jhon Doe</h3>
-            <p>jhondoe@gmail.com</p>
+            <h3>{currentInvoice?.customer.fullName || 'N/A'}</h3>
+            <p>{currentInvoice?.customer.email || 'N/A'}</p>
           </div>
           <img src={EditIcon} alt="edit" onClick={props.next} />
         </div>

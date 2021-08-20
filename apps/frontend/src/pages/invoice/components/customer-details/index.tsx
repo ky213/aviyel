@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -7,6 +8,8 @@ import { phoneRegExp } from 'libs/globals/constants';
 import Header from './Header';
 import CustomerForm from './CustomerForm';
 import Footer from './Footer';
+import { setCustomer } from 'apps/frontend/src/store/reducers/invoice.reducer';
+import { IRootState } from 'apps/frontend/src/store';
 
 const Form = styled.form`
   height: 100%;
@@ -15,13 +18,17 @@ const Form = styled.form`
   justify-content: space-between;
 `;
 
-export default function index(props: any) {
+export interface ICustomerDetailsProps extends StateProps, DispatchProps {
+  next: (step: 'customer' | 'product') => void;
+}
+
+function Index(props: ICustomerDetailsProps) {
   const formik = useFormik({
     initialValues: {
-      fullName: '',
-      address: '',
-      phone: '',
-      email: '',
+      fullName: props.customer?.fullName || '',
+      address: props.customer?.address || '',
+      phone: props.customer?.phone || '',
+      email: props.customer?.email || '',
       pincode: '',
     },
     validationSchema: Yup.object().shape({
@@ -37,6 +44,8 @@ export default function index(props: any) {
     }),
     onSubmit(values) {
       console.log(formik.touched.fullName, formik.errors.fullName);
+      props.setCustomer(values);
+      props.next('product');
     },
   });
   return (
@@ -52,3 +61,14 @@ export default function index(props: any) {
     </Form>
   );
 }
+
+const mapStateToProps = (state: IRootState) => ({
+  customer: state.invoice.currentInvoice?.customer,
+});
+
+const mapDispatchToProps = { setCustomer };
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
