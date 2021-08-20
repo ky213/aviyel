@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { ReactEventHandler, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useFormik } from 'formik';
 import styled, { StyledComponent } from 'styled-components';
 import { DialogActions } from '@material-ui/core';
-import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { Input } from './ProductItemForm';
 import { TextField, FieldError } from '../common/Styles';
+import { IRootState } from 'apps/frontend/src/store';
+import { setTaxes } from 'apps/frontend/src/store/reducers/invoice.reducer';
 
 const Form = styled.form``;
 
@@ -102,7 +105,22 @@ const Button: StyledComponent<any, any> = styled.button`
   }
 `;
 
-function Footer() {
+export interface IFooterProps extends StateProps, DispatchProps {}
+
+function Footer(props: IFooterProps) {
+  const subTotal =
+    props.currentInvoice?.products?.reduce(
+      (s, p) => s + +p.price * +p.quantity,
+      0
+    ) || 0;
+
+  const discountAmount =
+    subTotal * (+(props.currentInvoice?.discount || 0) / 100);
+  const taxAmount =
+    (subTotal - discountAmount) * (+(props.currentInvoice?.tax || 0) / 100);
+
+  const grandTotal = subTotal - discountAmount + taxAmount;
+
   const formik = useFormik({
     initialValues: {
       tax: '',
@@ -113,9 +131,13 @@ function Footer() {
       discount: Yup.number().required('number required'),
     }),
     onSubmit(values) {
-      console.log(formik.touched, formik.errors);
+      props.setTaxes(values);
     },
   });
+
+  useEffect(() => {
+    props.setTaxes(formik.values);
+  }, [formik.values]);
 
   return (
     <DialogActions>
@@ -151,24 +173,24 @@ function Footer() {
           </Taxes>
           <SubTotal>
             <span>Sub Total</span>
-            <span>$ 45.00</span>
+            <span>$ {subTotal?.toFixed(2)}</span>
           </SubTotal>
         </Total>
         <Result>
           <div>
             <div>
               <p>Tax</p>
-              <p>$ 0.00</p>
+              <p>$ {taxAmount.toFixed(2)}</p>
             </div>
             <div>
               <p>Discount</p>
-              <p>$ 0.00</p>
+              <p>$ {discountAmount.toFixed(2)}</p>
             </div>
           </div>
           <div>
             <div>
               <p>Grand Total</p>
-              <p>$ 45.00</p>
+              <p>$ {grandTotal.toFixed(2)}</p>
             </div>
             <div>
               <Button type="submit" primary>
@@ -182,4 +204,13 @@ function Footer() {
   );
 }
 
-export default Footer;
+const mapStateToProps = (state: IRootState) => ({
+  currentInvoice: state.invoice.currentInvoice,
+});
+
+const mapDispatchToProps = { setTaxes };
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

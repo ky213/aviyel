@@ -1,12 +1,12 @@
 import React from 'react';
-import styled, { StyledComponent } from 'styled-components';
+import styled from 'styled-components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
 
 import EnterIcon from 'apps/frontend/src/assets/enter-icon.png';
 import { TextField, FieldError } from '../common/Styles';
 import { addProduct } from 'apps/frontend/src/store/reducers/invoice.reducer';
-import { connect } from 'react-redux';
 import { IRootState } from 'apps/frontend/src/store';
 
 const Form = styled.form`

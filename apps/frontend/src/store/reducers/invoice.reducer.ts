@@ -25,6 +25,7 @@ export const INVOICE_ACTIONS = {
   GET_ONE: 'invoice/GET_ONE',
   CREATE: 'invoice/CREATE',
   ADD_PRODUCT: 'invoice/ADD_PRODUCT',
+  SET_TAXES: 'invoice/SET_TAXES',
   RESET: 'invoice/RESET',
 };
 
@@ -76,7 +77,15 @@ export default (state = initialState, { type, payload }: Action) => {
 
       currentInvoice.products?.push(payload);
 
-      return { ...state, currentInvoice: currentInvoice };
+      return { ...state, currentInvoice };
+    }
+    case INVOICE_ACTIONS.SET_TAXES: {
+      const currentInvoice = { ...state.currentInvoice };
+
+      currentInvoice.tax = payload.tax;
+      currentInvoice.discount = payload.discount;
+
+      return { ...state, currentInvoice };
     }
     case INVOICE_ACTIONS.RESET: {
       return { ...initialState };
@@ -89,6 +98,11 @@ export default (state = initialState, { type, payload }: Action) => {
 export const addProduct = (product: Product) => ({
   type: INVOICE_ACTIONS.ADD_PRODUCT,
   payload: product,
+});
+
+export const setTaxes = (taxes: Pick<Invoice, 'tax' | 'discount'>) => ({
+  type: INVOICE_ACTIONS.SET_TAXES,
+  payload: taxes,
 });
 
 export const resetinvoiceState = () => ({
