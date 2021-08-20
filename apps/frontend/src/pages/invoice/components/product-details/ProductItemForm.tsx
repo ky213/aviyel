@@ -5,6 +5,9 @@ import * as Yup from 'yup';
 
 import EnterIcon from 'apps/frontend/src/assets/enter-icon.png';
 import { TextField, FieldError } from '../common/Styles';
+import { addProduct } from 'apps/frontend/src/store/reducers/invoice.reducer';
+import { connect } from 'react-redux';
+import { IRootState } from 'apps/frontend/src/store';
 
 const Form = styled.form`
   display: flex;
@@ -41,7 +44,9 @@ const SubmitButton = styled.button`
   }
 `;
 
-function ProductForm() {
+export interface IProductFormProps extends StateProps, DispatchProps {}
+
+function ProductForm(props: IProductFormProps) {
   const formik = useFormik({
     initialValues: {
       productName: '',
@@ -56,7 +61,7 @@ function ProductForm() {
       quantity: Yup.number().required('number required'),
     }),
     onSubmit(values, { resetForm }) {
-      console.log(formik.touched, formik.errors);
+      props.addProduct(values);
       resetForm({
         values: {
           productName: '',
@@ -66,6 +71,7 @@ function ProductForm() {
       });
     },
   });
+
   return (
     <Form onSubmit={formik.handleSubmit} noValidate>
       <TextField width="60%">
@@ -109,4 +115,13 @@ function ProductForm() {
   );
 }
 
-export default ProductForm;
+const mapStateToProps = (state: IRootState) => ({});
+
+const mapDispatchToProps = {
+  addProduct,
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductForm);

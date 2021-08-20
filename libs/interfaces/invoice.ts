@@ -7,7 +7,7 @@ export interface Customer {
 
 export interface Product {
   productName: string;
-  cost: number | string;
+  price: number | string;
   quantity: number | string;
 }
 

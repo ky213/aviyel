@@ -54,11 +54,11 @@ function Body() {
           </tr>
         </Thead>
         <Tbody>
-          {currentInvoice?.products.map((product, index) => (
+          {currentInvoice?.products?.map((product, index) => (
             <Tr key={index}>
-              <Td>{product.productName}</Td>
+              <Td left>{product.productName}</Td>
               <Td>{product.quantity}</Td>
-              <Td>{product.cost}</Td>
+              <Td>{product.price}</Td>
             </Tr>
           ))}
         </Tbody>

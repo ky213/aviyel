@@ -72,6 +72,8 @@ export default (state = initialState, { type, payload }: Action) => {
     case INVOICE_ACTIONS.ADD_PRODUCT: {
       const currentInvoice = { ...state.currentInvoice };
 
+      if (!currentInvoice.products) currentInvoice.products = [];
+
       currentInvoice.products?.push(payload);
 
       return { ...state, currentInvoice: currentInvoice };
