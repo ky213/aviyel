@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { StyledComponent } from 'styled-components';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import EnterIcon from 'apps/frontend/src/assets/enter-icon.png';
-
-const Container = styled.div``;
+import { FieldError } from '../common/Styles';
 
 const Form = styled.form`
   display: flex;
@@ -14,10 +15,14 @@ const Form = styled.form`
   border-bottom: 1px solid lightgray;
 `;
 
+const TextField: StyledComponent<any, any> = styled.div`
+  width: ${({ width }: any) => width};
+`;
+
 export const Input = styled.input`
-  width: ${({ width }) => width};
-  height: 30px;
-  padding: 1px 5px;
+  width: 100%;
+  height: 35px;
+  padding: 2px 5px;
   margin-right: auto;
   border: 1px solid lightgray;
   border-radius: 4px;
@@ -40,17 +45,70 @@ const SubmitButton = styled.button`
 `;
 
 function ProductForm() {
+  const formik = useFormik({
+    initialValues: {
+      productName: '',
+      quantity: '',
+      price: '',
+    },
+    validationSchema: Yup.object().shape({
+      productName: Yup.string()
+        .max(30, 'Must be 30 characters or less')
+        .required('required'),
+      price: Yup.number().required('number required'),
+      quantity: Yup.number().required('number required'),
+    }),
+    onSubmit(values, { resetForm }) {
+      console.log(formik.touched, formik.errors);
+      resetForm({
+        values: {
+          productName: '',
+          quantity: '',
+          price: '',
+        },
+      });
+    },
+  });
   return (
-    <Container>
-      <Form>
-        <Input type="text" width="60%" placeholder="Please enter item name" />
-        <Input type="number" width="10%" placeholder="0.00" />
-        <Input type="number" width="10%" placeholder="0.00" />
-        <SubmitButton type="submit">
-          <img src={EnterIcon} alt="submit" />
-        </SubmitButton>
-      </Form>
-    </Container>
+    <Form onSubmit={formik.handleSubmit} noValidate>
+      <TextField width="60%">
+        <Input
+          type="text"
+          name="productName"
+          placeholder="Please enter item name"
+          onChange={formik.handleChange}
+          value={formik.values.productName}
+        />
+        <FieldError>
+          {formik.touched.productName && formik.errors.productName}
+        </FieldError>
+      </TextField>
+      <TextField width="10%">
+        <Input
+          type="number"
+          name="quantity"
+          placeholder="0.00"
+          onChange={formik.handleChange}
+          value={formik.values.quantity}
+        />
+        <FieldError>
+          {formik.touched.quantity && formik.errors.quantity}
+        </FieldError>
+      </TextField>
+      <TextField width="10%">
+        <Input
+          type="number"
+          name="price"
+          placeholder="0.00"
+          onChange={formik.handleChange}
+          value={formik.values.price}
+        />
+        <FieldError>{formik.touched.price && formik.errors.price}</FieldError>
+      </TextField>
+      <SubmitButton type="submit">
+        <img src={EnterIcon} alt="submit" />
+      </SubmitButton>
+    </Form>
   );
 }
 

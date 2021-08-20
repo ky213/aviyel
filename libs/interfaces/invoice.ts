@@ -6,9 +6,9 @@ export interface Customer {
 }
 
 export interface Product {
-  name: string;
-  cost: number;
-  quantity: number;
+  productName: string;
+  cost: number | string;
+  quantity: number | string;
 }
 
 export interface Invoice {
