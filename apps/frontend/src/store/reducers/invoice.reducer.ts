@@ -54,7 +54,7 @@ export default (state = initialState, { type, payload }: Action) => {
     case FAILURE(INVOICE_ACTIONS.GET_ALL):
     case FAILURE(INVOICE_ACTIONS.GET_ONE):
     case FAILURE(INVOICE_ACTIONS.CREATE): {
-      return { ...state, loading: false, success: false, error: payload.error };
+      return { ...state, loading: false, success: false, error: payload };
     }
 
     case SUCCESS(INVOICE_ACTIONS.GET_ALL): {
