@@ -1,8 +1,8 @@
-import React, { ReactEventHandler, useEffect } from 'react';
+import React, { ReactEventHandler, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import styled, { StyledComponent } from 'styled-components';
-import { DialogActions } from '@material-ui/core';
+import { Alert, DialogActions, Snackbar } from '@material-ui/core';
 import * as Yup from 'yup';
 
 import { Input } from './ProductItemForm';
@@ -111,6 +111,7 @@ const Button: StyledComponent<any, any> = styled.button`
 export interface IFooterProps extends StateProps, DispatchProps {}
 
 function Footer(props: IFooterProps) {
+  const [alertError, setAlertError] = useState(false);
   const subTotal =
     props.currentInvoice?.products?.reduce(
       (s, p) => s + +p.price * +p.quantity,
@@ -134,7 +135,14 @@ function Footer(props: IFooterProps) {
       discount: Yup.number().required('number required'),
     }),
     onSubmit(values) {
-      props.createInvoice(props.currentInvoice);
+      const products = props.currentInvoice?.products;
+      if (products) {
+        if (products.length > 0) {
+          props.createInvoice(props.currentInvoice);
+          return;
+        }
+      }
+      setAlertError(true);
     },
   });
 
@@ -143,67 +151,81 @@ function Footer(props: IFooterProps) {
   }, [formik.values]);
 
   return (
-    <DialogActions>
-      <Form onSubmit={formik.handleSubmit} noValidate>
-        <Total>
-          <Taxes>
-            <TextField width="30%" style={{ marginRight: '5px' }}>
-              <InputWithIcon>
-                <Input
-                  type="number"
-                  name="tax"
-                  placeholder="Tax"
-                  onChange={formik.handleChange}
-                />
-                <span>%</span>
-              </InputWithIcon>
-              <FieldError>{formik.touched.tax && formik.errors.tax}</FieldError>
-            </TextField>
-            <TextField width="30%">
-              <InputWithIcon>
-                <Input
-                  type="number"
-                  name="discount"
-                  placeholder="Discount"
-                  onChange={formik.handleChange}
-                />
-                <span>%</span>
-              </InputWithIcon>
-              <FieldError>
-                {formik.touched.discount && formik.errors.discount}
-              </FieldError>
-            </TextField>
-          </Taxes>
-          <SubTotal>
-            <span>Sub Total</span>
-            <span>$ {subTotal?.toFixed(2)}</span>
-          </SubTotal>
-        </Total>
-        <Result>
-          <div>
+    <>
+      <DialogActions>
+        <Form onSubmit={formik.handleSubmit} noValidate>
+          <Total>
+            <Taxes>
+              <TextField width="30%" style={{ marginRight: '5px' }}>
+                <InputWithIcon>
+                  <Input
+                    type="number"
+                    name="tax"
+                    placeholder="Tax"
+                    onChange={formik.handleChange}
+                  />
+                  <span>%</span>
+                </InputWithIcon>
+                <FieldError>
+                  {formik.touched.tax && formik.errors.tax}
+                </FieldError>
+              </TextField>
+              <TextField width="30%">
+                <InputWithIcon>
+                  <Input
+                    type="number"
+                    name="discount"
+                    placeholder="Discount"
+                    onChange={formik.handleChange}
+                  />
+                  <span>%</span>
+                </InputWithIcon>
+                <FieldError>
+                  {formik.touched.discount && formik.errors.discount}
+                </FieldError>
+              </TextField>
+            </Taxes>
+            <SubTotal>
+              <span>Sub Total</span>
+              <span>$ {subTotal?.toFixed(2)}</span>
+            </SubTotal>
+          </Total>
+          <Result>
             <div>
-              <p>Tax</p>
-              <p>$ {taxAmount.toFixed(2)}</p>
+              <div>
+                <p>Tax</p>
+                <p>$ {taxAmount.toFixed(2)}</p>
+              </div>
+              <div>
+                <p>Discount</p>
+                <p>$ {discountAmount.toFixed(2)}</p>
+              </div>
             </div>
             <div>
-              <p>Discount</p>
-              <p>$ {discountAmount.toFixed(2)}</p>
+              <div>
+                <p>Grand Total</p>
+                <p>$ {grandTotal.toFixed(2)}</p>
+              </div>
+              <div>
+                <Button type="submit" primary>
+                  Save
+                </Button>
+              </div>
             </div>
-          </div>
-          <div>
-            <div>
-              <p>Grand Total</p>
-              <p>$ {grandTotal.toFixed(2)}</p>
-            </div>
-            <div>
-              <Button type="submit" primary>
-                Save
-              </Button>
-            </div>
-          </div>
-        </Result>
-      </Form>
-    </DialogActions>
+          </Result>
+        </Form>
+      </DialogActions>
+      <Snackbar
+        open={alertError}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        style={{ width: '60%' }}
+      >
+        <Alert onClose={() => setAlertError(false)} color="error">
+          Please, add at least one product.
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
 
