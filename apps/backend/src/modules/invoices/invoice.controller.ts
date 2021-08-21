@@ -30,6 +30,15 @@ export class InvoiceController {
     }
   }
 
+  @Get('/last')
+  async getLastInvoice() {
+    try {
+      return await this.invoiceService.getLastOne();
+    } catch (error) {
+      return error;
+    }
+  }
+
   @Post('/create-invoice')
   async createInvoice(@Body() invoice: Invoice) {
     try {

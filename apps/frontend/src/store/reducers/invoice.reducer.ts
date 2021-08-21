@@ -1,14 +1,12 @@
 import { axios } from 'apps/frontend/src/config';
+import { AxiosResponse } from 'axios';
 import {
   REQUEST,
   SUCCESS,
   FAILURE,
 } from 'apps/frontend/src/utils/actionPrefix';
-import { AxiosResponse } from 'axios';
 
 import { Customer, Invoice, Product } from 'libs/interfaces/invoice';
-import { invoice } from '.';
-import { environment } from '../../environments/environment';
 
 export interface InvoiceSate {
   invoiceList: Invoice[];
@@ -70,7 +68,7 @@ export default (state = initialState, { type, payload }: Action) => {
     case SUCCESS(INVOICE_ACTIONS.CREATE): {
       const currentInvoice = { ...state.currentInvoice };
 
-      currentInvoice._id = payload._id;
+      currentInvoice._id = payload.data._id;
 
       return {
         ...state,

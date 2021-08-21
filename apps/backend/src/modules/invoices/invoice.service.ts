@@ -18,6 +18,10 @@ export class InvoiceService {
     return this.invoiceModel.findById(id).exec();
   }
 
+  async getLastOne(): Promise<InvoiceDocument> {
+    return this.invoiceModel.findOne().sort({ created_at: -1 }).exec();
+  }
+
   async createInvoice(invoice): Promise<InvoiceDocument> {
     return this.invoiceModel.create(invoice);
   }
