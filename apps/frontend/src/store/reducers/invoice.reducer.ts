@@ -1,3 +1,4 @@
+import { axios } from 'apps/frontend/src/config';
 import {
   REQUEST,
   SUCCESS,
@@ -5,6 +6,8 @@ import {
 } from 'apps/frontend/src/utils/actionPrefix';
 
 import { Customer, Invoice, Product } from 'libs/interfaces/invoice';
+import { invoice } from '.';
+import { environment } from '../../environments/environment';
 
 export interface InvoiceSate {
   invoiceList: Invoice[];
@@ -115,6 +118,11 @@ export const setTaxes = (taxes: Pick<Invoice, 'tax' | 'discount'>) => ({
 export const setCustomer = (customer: Customer) => ({
   type: INVOICE_ACTIONS.SET_CUSTOMER,
   payload: customer,
+});
+
+export const createInvoice = (invoice: Invoice | null) => ({
+  type: INVOICE_ACTIONS.CREATE,
+  payload: axios.post('/invoice/create-invoice', invoice),
 });
 
 export const resetinvoiceState = () => ({
