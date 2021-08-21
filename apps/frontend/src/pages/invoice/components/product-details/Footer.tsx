@@ -8,7 +8,10 @@ import * as Yup from 'yup';
 import { Input } from './ProductItemForm';
 import { TextField, FieldError } from '../common/Styles';
 import { IRootState } from 'apps/frontend/src/store';
-import { setTaxes } from 'apps/frontend/src/store/reducers/invoice.reducer';
+import {
+  setTaxes,
+  createInvoice,
+} from 'apps/frontend/src/store/reducers/invoice.reducer';
 
 const Form = styled.form``;
 
@@ -131,7 +134,7 @@ function Footer(props: IFooterProps) {
       discount: Yup.number().required('number required'),
     }),
     onSubmit(values) {
-      props.setTaxes(values);
+      props.createInvoice(props.currentInvoice);
     },
   });
 
@@ -208,7 +211,7 @@ const mapStateToProps = (state: IRootState) => ({
   currentInvoice: state.invoice.currentInvoice,
 });
 
-const mapDispatchToProps = { setTaxes };
+const mapDispatchToProps = { setTaxes, createInvoice };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

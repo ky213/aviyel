@@ -30,7 +30,7 @@ export class InvoiceController {
     }
   }
 
-  @Post()
+  @Post('/create-invoice')
   async createInvoice(@Body() invoice: Invoice) {
     try {
       return await this.invoiceService.createInvoice(invoice);

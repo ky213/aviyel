@@ -43,7 +43,6 @@ function Index(props: ICustomerDetailsProps) {
       pincode: Yup.string(),
     }),
     onSubmit(values) {
-      console.log(formik.touched.fullName, formik.errors.fullName);
       props.setCustomer(values);
       props.next('product');
     },

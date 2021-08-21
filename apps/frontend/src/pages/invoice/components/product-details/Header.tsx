@@ -68,8 +68,8 @@ export default function Header(props: HeaderProps) {
         <div>
           <div>
             <p>Customer Details</p>
-            <h3>{currentInvoice?.customer.fullName || 'N/A'}</h3>
-            <p>{currentInvoice?.customer.email || 'N/A'}</p>
+            <h3>{currentInvoice?.customer?.fullName || 'N/A'}</h3>
+            <p>{currentInvoice?.customer?.email || 'N/A'}</p>
           </div>
           <img src={EditIcon} alt="edit" onClick={props.next} />
         </div>
