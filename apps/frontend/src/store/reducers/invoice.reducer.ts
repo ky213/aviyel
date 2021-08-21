@@ -4,6 +4,7 @@ import {
   SUCCESS,
   FAILURE,
 } from 'apps/frontend/src/utils/actionPrefix';
+import { AxiosResponse } from 'axios';
 
 import { Customer, Invoice, Product } from 'libs/interfaces/invoice';
 import { invoice } from '.';
@@ -64,12 +65,16 @@ export default (state = initialState, { type, payload }: Action) => {
       };
     }
     case SUCCESS(INVOICE_ACTIONS.GET_ONE): {
-      return { ...state, loading: false, currentActivity: payload.data };
+      return { ...state, loading: false, currentInvoice: payload.data };
     }
     case SUCCESS(INVOICE_ACTIONS.CREATE): {
+      const currentInvoice = { ...state.currentInvoice };
+
+      currentInvoice._id = payload._id;
+
       return {
         ...state,
-        currentActivity: payload.data,
+        currentInvoice,
         loading: false,
         success: true,
       };
@@ -99,7 +104,7 @@ export default (state = initialState, { type, payload }: Action) => {
       return { ...state, currentInvoice };
     }
     case INVOICE_ACTIONS.RESET: {
-      return { ...initialState };
+      return { ...state, loading: false, success: false, error: null };
     }
     default:
       return state;
@@ -122,9 +127,12 @@ export const setCustomer = (customer: Customer) => ({
 
 export const createInvoice = (invoice: Invoice | null) => ({
   type: INVOICE_ACTIONS.CREATE,
-  payload: axios.post('/invoice/create-invoice', invoice),
+  payload: axios.post<Invoice, AxiosResponse<Pick<Invoice, '_id'>>>(
+    '/invoice/create-invoice',
+    invoice
+  ),
 });
 
-export const resetinvoiceState = () => ({
+export const resetInvoiceState = () => ({
   type: INVOICE_ACTIONS.RESET,
 });

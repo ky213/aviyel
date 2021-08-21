@@ -12,6 +12,7 @@ export interface Product {
 }
 
 export interface Invoice {
+  _id: string;
   invoiceNumber: string;
   customer: Customer;
   products: Product[];

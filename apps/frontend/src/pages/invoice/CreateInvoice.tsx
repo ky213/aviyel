@@ -1,16 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
 import { Dialog, useMediaQuery } from '@material-ui/core';
 
 import { Header, Content } from './components';
+import { IRootState } from '../../store';
+import { resetInvoiceState } from 'apps/frontend/src/store/reducers/invoice.reducer';
 
-function CreateInvoice() {
+export interface ICreateInvoiceProps extends StateProps, DispatchProps {}
+
+function CreateInvoice(props: ICreateInvoiceProps) {
   const [open, setOpen] = React.useState(true);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleClose = () => {
     setOpen(false);
+    props.resetInvoiceState();
   };
 
   return (
@@ -29,4 +35,13 @@ function CreateInvoice() {
   );
 }
 
-export default CreateInvoice;
+const mapStateToProps = (state: IRootState) => ({
+  currentInvoice: state.invoice.currentInvoice,
+});
+
+const mapDispatchToProps = { resetInvoiceState };
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateInvoice);
