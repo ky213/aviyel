@@ -23,19 +23,19 @@ export class InvoiceController {
     return 'q invoice ' + query;
   }
 
-  @Get('/:id')
-  async getInvoiceById(@Param('id') id: string) {
+  @Get('/last')
+  async getLastInvoice() {
     try {
-      return await this.invoiceService.getById(id);
+      return await this.invoiceService.getLastOne();
     } catch (error) {
       return error;
     }
   }
 
-  @Get('/last')
-  async getLastInvoice() {
+  @Get('/:id')
+  async getInvoiceById(@Param('id') id: string) {
     try {
-      return await this.invoiceService.getLastOne();
+      return await this.invoiceService.getById(id);
     } catch (error) {
       return error;
     }

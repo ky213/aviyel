@@ -129,9 +129,10 @@ function Footer(props: IFooterProps) {
     }),
     onSubmit(values) {
       const products = props.currentInvoice?.products;
+      const invoiceNumber = 'INV00' + props.totalNumberOfRecords + 1;
       if (products) {
         if (products.length > 0) {
-          props.createInvoice(props.currentInvoice);
+          props.createInvoice(props.currentInvoice, invoiceNumber);
           return;
         }
       }
@@ -224,6 +225,7 @@ function Footer(props: IFooterProps) {
 
 const mapStateToProps = (state: IRootState) => ({
   currentInvoice: state.invoice.currentInvoice,
+  totalNumberOfRecords: state.invoice.totalNumberOfRecords,
 });
 
 const mapDispatchToProps = { setTaxes, createInvoice };

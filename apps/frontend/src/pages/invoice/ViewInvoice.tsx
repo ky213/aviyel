@@ -89,9 +89,9 @@ const Footer = styled.div`
   }
 `;
 
-export interface IViewInvoiceeProps extends StateProps, DispatchProps {}
+export interface IViewInvoiceProps extends StateProps, DispatchProps {}
 
-function ViewInvoice(props: IViewInvoiceeProps) {
+function ViewInvoice(props: IViewInvoiceProps) {
   const [subTotal, discountAmount, taxAmount, grandTotal] = calculateShares(
     props.currentInvoice
   );
@@ -102,13 +102,13 @@ function ViewInvoice(props: IViewInvoiceeProps) {
         <Header>
           <InvoiceNumber>
             <h3>Invoice</h3>
-            <h4># INV12457</h4>
+            <h4># {props.currentInvoice?.invoiceNumber}</h4>
             <small>11:12 AM - Today </small>
           </InvoiceNumber>
           <CustomerDetails>
             <p>Customer details</p>
-            <h4>Jhon Doe</h4>
-            <p>Jhondoe@gmail.com</p>
+            <h4>{props.currentInvoice?.customer.fullName || 'N/A'}</h4>
+            <p>{props.currentInvoice?.customer.email || 'N/A'}</p>
           </CustomerDetails>
           <PrintButton>
             <span>Print </span>
@@ -136,19 +136,19 @@ function ViewInvoice(props: IViewInvoiceeProps) {
         <Footer>
           <div>
             <p>Sub Total</p>
-            <h4>$ {subTotal || '0.00'}</h4>
+            <h4>$ {subTotal.toFixed(2) || '0.00'}</h4>
           </div>
           <div>
             <p>Tax({'%' + props.currentInvoice?.tax})</p>
-            <h4>$ {taxAmount || '0.00'}</h4>
+            <h4>$ {taxAmount.toFixed(2) || '0.00'}</h4>
           </div>
           <div>
             <p>Discount({'%' + props.currentInvoice?.discount})</p>
-            <h4>$ {discountAmount || '0.00'}</h4>
+            <h4>$ {discountAmount.toFixed(2) || '0.00'}</h4>
           </div>
           <div>
             <h4>Grand Total</h4>
-            <h3>$ {grandTotal || '0.00'}</h3>
+            <h3>$ {grandTotal.toFixed(2) || '0.00'}</h3>
           </div>
         </Footer>
       </Invoice>

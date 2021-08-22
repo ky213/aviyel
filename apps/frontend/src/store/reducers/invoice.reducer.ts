@@ -59,7 +59,8 @@ export default (state = initialState, { type, payload }: Action) => {
       return {
         ...state,
         loading: false,
-        invoiceList: payload.data,
+        invoiceList: payload.data.invoiceList,
+        totalNumberOfRecords: payload.data.totalNumberOfRecords,
       };
     }
     case SUCCESS(INVOICE_ACTIONS.GET_ONE): {
@@ -123,12 +124,20 @@ export const setCustomer = (customer: Customer) => ({
   payload: customer,
 });
 
-export const createInvoice = (invoice: Invoice | null) => ({
+export const createInvoice = (
+  invoice: Invoice | null,
+  invoiceNumber: string
+) => ({
   type: INVOICE_ACTIONS.CREATE,
   payload: axios.post<Invoice, AxiosResponse<Pick<Invoice, '_id'>>>(
     '/invoice/create-invoice',
-    invoice
+    { ...invoice, invoiceNumber }
   ),
+});
+
+export const getAllInvoices = () => ({
+  type: INVOICE_ACTIONS.GET_ALL,
+  payload: axios.get('/invoice/all'),
 });
 
 export const resetInvoiceState = () => ({
