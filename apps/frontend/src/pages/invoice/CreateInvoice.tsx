@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import { Dialog, useMediaQuery } from '@material-ui/core';
 
@@ -10,6 +11,7 @@ import { resetInvoiceState } from 'apps/frontend/src/store/reducers/invoice.redu
 export interface ICreateInvoiceProps extends StateProps, DispatchProps {}
 
 function CreateInvoice(props: ICreateInvoiceProps) {
+  const history = useHistory();
   const [open, setOpen] = React.useState(true);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -17,6 +19,7 @@ function CreateInvoice(props: ICreateInvoiceProps) {
   const handleClose = () => {
     setOpen(false);
     props.resetInvoiceState();
+    history.push('/invoice/view');
   };
 
   return (

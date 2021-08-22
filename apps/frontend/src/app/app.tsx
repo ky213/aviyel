@@ -12,7 +12,7 @@ export function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/invoice/create" component={CreateInvoice} />
-          <Route path="/invoice/:id" component={ViewInvoice} />
+          <Route path="/invoice/view" component={ViewInvoice} />
         </Switch>
       </MainLayout>
     </Provider>
