@@ -8,6 +8,7 @@ import { IRootState } from '../../store';
 import { calculateShares } from '../../utils/calculations';
 import {
   getLastInvoice,
+  getAllInvoices,
   resetInvoiceState,
 } from '../../store/reducers/invoice.reducer';
 
@@ -104,6 +105,7 @@ function ViewInvoice(props: IViewInvoiceProps) {
     props.getLastInvoice();
     return () => {
       props.resetInvoiceState();
+      props.getAllInvoices();
     };
   }, []);
 
@@ -115,7 +117,11 @@ function ViewInvoice(props: IViewInvoiceProps) {
           <InvoiceNumber>
             <h3>Invoice</h3>
             <h4># {props.currentInvoice?.invoiceNumber}</h4>
-            <small>11:12 AM - Today </small>
+            <small>
+              {new Date(
+                props.currentInvoice?.created_at || ''
+              ).toLocaleString()}
+            </small>
           </InvoiceNumber>
           <CustomerDetails>
             <p>Customer details</p>
@@ -172,7 +178,11 @@ const mapStateToProps = (state: IRootState) => ({
   currentInvoice: state.invoice.currentInvoice,
 });
 
-const mapDispatchToProps = { getLastInvoice, resetInvoiceState };
+const mapDispatchToProps = {
+  getLastInvoice,
+  getAllInvoices,
+  resetInvoiceState,
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

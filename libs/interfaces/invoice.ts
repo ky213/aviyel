@@ -18,6 +18,7 @@ export interface Invoice {
   products: Product[];
   tax: number | string;
   discount: number | string;
+  created_at: Date;
 }
 
 export interface InvoiceDocument extends Invoice, Document {}

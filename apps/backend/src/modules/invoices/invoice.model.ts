@@ -34,7 +34,7 @@ export class InvoiceDef {
   @Prop({ type: Number })
   discount: number;
 
-  @Prop({ type: Date, default: new Date() })
+  @Prop({ type: Date, default: () => new Date() })
   created_at: Date;
 }
 

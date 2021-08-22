@@ -103,7 +103,7 @@ export default (state = initialState, { type, payload }: Action) => {
       return { ...state, currentInvoice };
     }
     case INVOICE_ACTIONS.RESET: {
-      return { ...state, loading: false, success: false, error: null };
+      return { ...initialState };
     }
     default:
       return state;

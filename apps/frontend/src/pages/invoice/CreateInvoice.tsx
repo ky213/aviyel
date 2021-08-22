@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
@@ -6,6 +6,10 @@ import { Dialog, useMediaQuery } from '@material-ui/core';
 
 import { Header, Content } from './components';
 import { IRootState } from '../../store';
+import {
+  getAllInvoices,
+  resetInvoiceState,
+} from '../../store/reducers/invoice.reducer';
 
 export interface ICreateInvoiceProps extends StateProps, DispatchProps {}
 
@@ -19,6 +23,13 @@ function CreateInvoice(props: ICreateInvoiceProps) {
     setOpen(false);
     history.push('/invoice/view');
   };
+
+  useEffect(() => {
+    props.getAllInvoices();
+    return () => {
+      props.resetInvoiceState();
+    };
+  }, []);
 
   return (
     <Dialog
@@ -40,7 +51,7 @@ const mapStateToProps = (state: IRootState) => ({
   currentInvoice: state.invoice.currentInvoice,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { getAllInvoices, resetInvoiceState };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
