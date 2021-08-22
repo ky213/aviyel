@@ -12,6 +12,7 @@ import {
   setTaxes,
   createInvoice,
 } from 'apps/frontend/src/store/reducers/invoice.reducer';
+import { calculateShares } from 'apps/frontend/src/utils/calculations';
 
 const Form = styled.form``;
 
@@ -112,18 +113,10 @@ export interface IFooterProps extends StateProps, DispatchProps {}
 
 function Footer(props: IFooterProps) {
   const [alertError, setAlertError] = useState(false);
-  const subTotal =
-    props.currentInvoice?.products?.reduce(
-      (s, p) => s + +p.price * +p.quantity,
-      0
-    ) || 0;
 
-  const discountAmount =
-    subTotal * (+(props.currentInvoice?.discount || 0) / 100);
-  const taxAmount =
-    (subTotal - discountAmount) * (+(props.currentInvoice?.tax || 0) / 100);
-
-  const grandTotal = subTotal - discountAmount + taxAmount;
+  const [subTotal, discountAmount, taxAmount, grandTotal] = calculateShares(
+    props.currentInvoice
+  );
 
   const formik = useFormik({
     initialValues: {
