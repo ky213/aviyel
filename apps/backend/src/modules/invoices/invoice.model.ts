@@ -4,13 +4,12 @@ import { Customer, Product } from 'libs/interfaces/invoice';
 
 @Schema()
 export class InvoiceDef {
-  @Prop({ unique: true })
-  invoiceNumber: number;
+  @Prop({ unique: true, type: String })
+  invoiceNumber: string;
 
   @Prop({
     type: {
-      firstName: String,
-      lastName: String,
+      fullName: String,
       email: String,
       phone: String,
     },
@@ -28,6 +27,12 @@ export class InvoiceDef {
     required: true,
   })
   products: Product[];
+
+  @Prop({ type: Number })
+  tax: number;
+
+  @Prop({ type: Number })
+  discount: number;
 }
 
 export const InvoiceSchema = SchemaFactory.createForClass(InvoiceDef);

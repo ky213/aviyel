@@ -131,11 +131,6 @@ function ViewInvoice(props: IViewInvoiceeProps) {
                 <Td>{product.price}</Td>
               </Tr>
             ))}
-            <Tr>
-              <Td left>bsket</Td>
-              <Td>10</Td>
-              <Td>10</Td>
-            </Tr>
           </Tbody>
         </Table>
         <Footer>

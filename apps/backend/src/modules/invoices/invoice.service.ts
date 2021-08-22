@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { InvoiceDocument } from 'libs/interfaces/invoice';
+import { InvoiceDocument, Pagiantion } from 'libs/interfaces/invoice';
 
 @Injectable()
 export class InvoiceService {
@@ -10,8 +10,21 @@ export class InvoiceService {
     @InjectModel('Invoice') private invoiceModel: Model<InvoiceDocument>
   ) {}
 
-  async geAll(): Promise<InvoiceDocument[]> {
-    return this.invoiceModel.find().exec();
+  async geAll({
+    page,
+    itemsPerPage,
+    order,
+  }: Pagiantion): Promise<InvoiceDocument[]> {
+    return this.invoiceModel
+      .find()
+      .limit(+itemsPerPage)
+      .skip(+itemsPerPage * +page)
+      .sort({ created_at: +order })
+      .exec();
+  }
+
+  async count(): Promise<number> {
+    return this.invoiceModel.count().exec();
   }
 
   async getById(id: string): Promise<InvoiceDocument> {

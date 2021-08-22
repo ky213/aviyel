@@ -21,3 +21,14 @@ export interface Invoice {
 }
 
 export interface InvoiceDocument extends Invoice, Document {}
+
+export interface Pagiantion {
+  page: number;
+  itemsPerPage: number;
+  order: Order;
+}
+
+enum Order {
+  'asc' = 1,
+  'desc' = -1,
+}

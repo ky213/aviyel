@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
-import { Invoice } from 'libs/interfaces/invoice';
+import { Invoice, Pagiantion } from 'libs/interfaces/invoice';
 import { InvoiceService } from './invoice.service';
 
 @Controller('invoice')
@@ -8,9 +8,11 @@ export class InvoiceController {
   constructor(private readonly invoiceService: InvoiceService) {}
 
   @Get('/all')
-  async getAllInvoices() {
+  async getAllInvoices(@Query() pagination: Pagiantion) {
     try {
-      return await this.invoiceService.geAll();
+      const invoiceList = await this.invoiceService.geAll(pagination);
+      const totalNumberOfRecords = await this.invoiceService.count();
+      return { invoiceList, totalNumberOfRecords, pagination };
     } catch (error) {
       return error;
     }
