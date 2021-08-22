@@ -33,6 +33,9 @@ export class InvoiceDef {
 
   @Prop({ type: Number })
   discount: number;
+
+  @Prop({ type: Date, default: new Date() })
+  created_at: Date;
 }
 
 export const InvoiceSchema = SchemaFactory.createForClass(InvoiceDef);

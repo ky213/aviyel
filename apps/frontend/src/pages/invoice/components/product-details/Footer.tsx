@@ -129,7 +129,7 @@ function Footer(props: IFooterProps) {
     }),
     onSubmit(values) {
       const products = props.currentInvoice?.products;
-      const invoiceNumber = 'INV00' + props.totalNumberOfRecords + 1;
+      const invoiceNumber = 'INV00' + (props.totalNumberOfRecords + 1);
       if (products) {
         if (products.length > 0) {
           props.createInvoice(props.currentInvoice, invoiceNumber);

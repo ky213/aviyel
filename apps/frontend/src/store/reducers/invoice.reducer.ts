@@ -140,6 +140,11 @@ export const getAllInvoices = () => ({
   payload: axios.get('/invoice/all'),
 });
 
+export const getLastInvoice = () => ({
+  type: INVOICE_ACTIONS.GET_ONE,
+  payload: axios.get('/invoice/last'),
+});
+
 export const resetInvoiceState = () => ({
   type: INVOICE_ACTIONS.RESET,
 });

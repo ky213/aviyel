@@ -6,7 +6,6 @@ import { Dialog, useMediaQuery } from '@material-ui/core';
 
 import { Header, Content } from './components';
 import { IRootState } from '../../store';
-import { resetInvoiceState } from 'apps/frontend/src/store/reducers/invoice.reducer';
 
 export interface ICreateInvoiceProps extends StateProps, DispatchProps {}
 
@@ -18,7 +17,6 @@ function CreateInvoice(props: ICreateInvoiceProps) {
 
   const handleClose = () => {
     setOpen(false);
-    props.resetInvoiceState();
     history.push('/invoice/view');
   };
 
@@ -42,7 +40,7 @@ const mapStateToProps = (state: IRootState) => ({
   currentInvoice: state.invoice.currentInvoice,
 });
 
-const mapDispatchToProps = { resetInvoiceState };
+const mapDispatchToProps = {};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

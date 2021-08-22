@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import PrintIcon from 'apps/frontend/src/assets/printer-blue.png';
 import { Table, Thead, Tbody, Td, Th, Tr } from './components/common/Styles';
 import { IRootState } from '../../store';
-import { connect } from 'react-redux';
 import { calculateShares } from '../../utils/calculations';
+import {
+  getLastInvoice,
+  resetInvoiceState,
+} from '../../store/reducers/invoice.reducer';
 
 const Container = styled.div`
   width: 95%;
@@ -95,6 +99,14 @@ function ViewInvoice(props: IViewInvoiceProps) {
   const [subTotal, discountAmount, taxAmount, grandTotal] = calculateShares(
     props.currentInvoice
   );
+
+  useEffect(() => {
+    props.getLastInvoice();
+    return () => {
+      props.resetInvoiceState();
+    };
+  }, []);
+
   return (
     <Container>
       <Title>Invoice Details</Title>
@@ -107,8 +119,8 @@ function ViewInvoice(props: IViewInvoiceProps) {
           </InvoiceNumber>
           <CustomerDetails>
             <p>Customer details</p>
-            <h4>{props.currentInvoice?.customer.fullName || 'N/A'}</h4>
-            <p>{props.currentInvoice?.customer.email || 'N/A'}</p>
+            <h4>{props.currentInvoice?.customer?.fullName || 'N/A'}</h4>
+            <p>{props.currentInvoice?.customer?.email || 'N/A'}</p>
           </CustomerDetails>
           <PrintButton>
             <span>Print </span>
@@ -160,7 +172,7 @@ const mapStateToProps = (state: IRootState) => ({
   currentInvoice: state.invoice.currentInvoice,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { getLastInvoice, resetInvoiceState };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
