@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { IRootState } from 'apps/frontend/src/store';
-import { getAllInvoices } from 'apps/frontend/src/store/reducers/invoice.reducer';
+import {
+  getAllInvoices,
+  getInvoiceById,
+} from 'apps/frontend/src/store/reducers/invoice.reducer';
 import SearchIcon from 'apps/frontend/src/assets/search-icon.png';
 import { calculateShares } from 'apps/frontend/src/utils/calculations';
 
@@ -107,7 +110,10 @@ function LeftMenu(props: ILeftMenuProps) {
           const [subTotal, discountAmount, taxAmount, grandTotal] =
             calculateShares(invoice);
           return (
-            <InvoiceBrick>
+            <InvoiceBrick
+              key={invoice._id}
+              onClick={() => props.getInvoiceById(invoice._id)}
+            >
               <div>
                 <InvoiceNumber>{invoice.invoiceNumber}</InvoiceNumber>
                 <InvoiceDate>
@@ -119,7 +125,7 @@ function LeftMenu(props: ILeftMenuProps) {
               </div>
               <div>
                 <CustomerName>{invoice.customer?.fullName}</CustomerName>
-                <GrandTotal>$ {grandTotal}</GrandTotal>
+                <GrandTotal>$ {grandTotal.toFixed(2)}</GrandTotal>
               </div>
             </InvoiceBrick>
           );
@@ -134,7 +140,7 @@ const mapStateToProps = (state: IRootState) => ({
   totalNumberOfRecords: state.invoice.totalNumberOfRecords,
 });
 
-const mapDispatchToProps = { getAllInvoices };
+const mapDispatchToProps = { getAllInvoices, getInvoiceById };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

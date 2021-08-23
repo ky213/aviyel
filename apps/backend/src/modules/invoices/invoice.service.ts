@@ -19,7 +19,7 @@ export class InvoiceService {
       .find()
       .limit(+itemsPerPage)
       .skip(+itemsPerPage * +page)
-      .sort({ created_at: +order })
+      .sort({ created_at: +order || -1 })
       .exec();
   }
 

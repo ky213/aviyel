@@ -20,7 +20,7 @@ export class InvoiceDef {
     type: [
       {
         productName: String,
-        cost: Number,
+        price: Number,
         quantity: Number,
       },
     ],
