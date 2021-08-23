@@ -99,7 +99,7 @@ function LeftMenu(props: ILeftMenuProps) {
   }, []);
 
   return (
-    <LeftMenuStyled>
+    <LeftMenuStyled className="no-print">
       <Search>
         <input type="text" placeholder="search..." />
         <img src={SearchIcon} />

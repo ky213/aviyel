@@ -42,3 +42,24 @@ input[type='number']::-webkit-outer-spin-button {
 #back-drop {
   z-index: 9999 !important;
 }
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  #invoice-to-print {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    box-shadow: 0 0 !important;
+  }
+
+  @page {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}

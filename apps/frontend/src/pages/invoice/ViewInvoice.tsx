@@ -103,16 +103,21 @@ function ViewInvoice(props: IViewInvoiceProps) {
 
   useEffect(() => {
     props.getLastInvoice();
+    props.getAllInvoices();
     return () => {
       props.resetInvoiceState();
       props.getAllInvoices();
     };
   }, []);
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
-    <Container>
-      <Title>Invoice Details</Title>
-      <Invoice>
+    <Container id="invoice-to-print">
+      <Title className="no-print">Invoice Details</Title>
+      <Invoice id="invoice-to-print">
         <Header>
           <InvoiceNumber>
             <h3>Invoice</h3>
@@ -128,7 +133,7 @@ function ViewInvoice(props: IViewInvoiceProps) {
             <h4>{props.currentInvoice?.customer?.fullName || 'N/A'}</h4>
             <p>{props.currentInvoice?.customer?.email || 'N/A'}</p>
           </CustomerDetails>
-          <PrintButton>
+          <PrintButton className="no-print" onClick={handlePrint}>
             <span>Print </span>
             <img src={PrintIcon} />
           </PrintButton>

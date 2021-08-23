@@ -44,7 +44,7 @@ const RoundedButton = styled.button`
 
 function TopBar() {
   return (
-    <TopBarStyled>
+    <TopBarStyled className="no-print">
       <Title to="/">Dashboard</Title>
       <NavLink to="/invoice/create">
         <RoundedButton title="create invoice">+</RoundedButton>
