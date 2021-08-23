@@ -18,15 +18,26 @@ export class InvoiceController {
     }
   }
 
-  @Get('/search')
-  searchInvoice(@Query('q') query: string) {
-    return 'q invoice ' + query;
-  }
-
   @Get('/last')
   async getLastInvoice() {
     try {
       return await this.invoiceService.getLastOne();
+    } catch (error) {
+      return error;
+    }
+  }
+
+  @Get('/search')
+  async search(@Query('q') query: string) {
+    try {
+      if (query.length > 0)
+        return await this.invoiceService.searchInvoice(query);
+      else
+        return await this.invoiceService.geAll({
+          page: 0,
+          itemsPerPage: null,
+          order: -1,
+        });
     } catch (error) {
       return error;
     }

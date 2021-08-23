@@ -42,3 +42,11 @@ export const InvoiceSchema = SchemaFactory.createForClass(InvoiceDef);
 export const InvoiceModel = MongooseModule.forFeature([
   { name: 'Invoice', schema: InvoiceSchema },
 ]);
+
+InvoiceSchema.index(
+  {
+    invoiceNumber: 'text',
+    'customer.fullName': 'text',
+  },
+  { name: 'invoiceSearch' }
+);

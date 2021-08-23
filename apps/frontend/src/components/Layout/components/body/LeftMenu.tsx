@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { IRootState } from 'apps/frontend/src/store';
 import {
   getAllInvoices,
+  searchInvoice,
   getInvoiceById,
 } from 'apps/frontend/src/store/reducers/invoice.reducer';
 import SearchIcon from 'apps/frontend/src/assets/search-icon.png';
@@ -98,15 +99,19 @@ function LeftMenu(props: ILeftMenuProps) {
     props.getAllInvoices();
   }, []);
 
+  const handleSearch = (e: any) => {
+    props.searchInvoice(e.target.value);
+  };
+
   return (
     <LeftMenuStyled className="no-print">
       <Search>
-        <input type="text" placeholder="search..." />
+        <input type="text" placeholder="search..." onKeyUp={handleSearch} />
         <img src={SearchIcon} />
       </Search>
       <InvoiceCount>Invoices: {props.totalNumberOfRecords}</InvoiceCount>
       <InvoiceList>
-        {props.invoiceList.map((invoice) => {
+        {props.invoiceList?.map((invoice) => {
           const [subTotal, discountAmount, taxAmount, grandTotal] =
             calculateShares(invoice);
           return (
@@ -138,9 +143,10 @@ function LeftMenu(props: ILeftMenuProps) {
 const mapStateToProps = (state: IRootState) => ({
   invoiceList: state.invoice.invoiceList,
   totalNumberOfRecords: state.invoice.totalNumberOfRecords,
+  loading: state.invoice.loading,
 });
 
-const mapDispatchToProps = { getAllInvoices, getInvoiceById };
+const mapDispatchToProps = { getAllInvoices, searchInvoice, getInvoiceById };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

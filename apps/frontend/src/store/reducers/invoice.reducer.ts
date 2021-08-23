@@ -25,6 +25,7 @@ export interface Action {
 export const INVOICE_ACTIONS = {
   GET_ALL: 'invoice/GET_ALL',
   GET_ONE: 'invoice/GET_ONE',
+  SEARCH: 'invoice/SEARCH',
   CREATE: 'invoice/CREATE',
   ADD_PRODUCT: 'invoice/ADD_PRODUCT',
   SET_TAXES: 'invoice/SET_TAXES',
@@ -45,12 +46,14 @@ export default (state = initialState, { type, payload }: Action) => {
   switch (type) {
     case REQUEST(INVOICE_ACTIONS.GET_ALL):
     case REQUEST(INVOICE_ACTIONS.GET_ONE):
+    case REQUEST(INVOICE_ACTIONS.SEARCH):
     case REQUEST(INVOICE_ACTIONS.CREATE): {
       return { ...state, loading: true, success: false, error: null };
     }
 
     case FAILURE(INVOICE_ACTIONS.GET_ALL):
     case FAILURE(INVOICE_ACTIONS.GET_ONE):
+    case FAILURE(INVOICE_ACTIONS.SEARCH):
     case FAILURE(INVOICE_ACTIONS.CREATE): {
       return { ...state, loading: false, success: false, error: payload };
     }
@@ -65,6 +68,13 @@ export default (state = initialState, { type, payload }: Action) => {
     }
     case SUCCESS(INVOICE_ACTIONS.GET_ONE): {
       return { ...state, loading: false, currentInvoice: payload.data };
+    }
+    case SUCCESS(INVOICE_ACTIONS.SEARCH): {
+      return {
+        ...state,
+        loading: false,
+        invoiceList: payload.data,
+      };
     }
     case SUCCESS(INVOICE_ACTIONS.CREATE): {
       const currentInvoice = { ...state.currentInvoice };
@@ -148,6 +158,11 @@ export const getLastInvoice = () => ({
 export const getInvoiceById = (id: string | undefined) => ({
   type: INVOICE_ACTIONS.GET_ONE,
   payload: axios.get(`/invoice/${id}`),
+});
+
+export const searchInvoice = (query: string) => ({
+  type: INVOICE_ACTIONS.SEARCH,
+  payload: axios.get(`/invoice/search?q=${query}`),
 });
 
 export const resetInvoiceState = () => ({

@@ -38,4 +38,12 @@ export class InvoiceService {
   async createInvoice(invoice): Promise<InvoiceDocument> {
     return this.invoiceModel.create(invoice);
   }
+
+  async searchInvoice(query: string): Promise<InvoiceDocument[]> {
+    return this.invoiceModel.find({
+      $text: {
+        $search: query,
+      },
+    });
+  }
 }
