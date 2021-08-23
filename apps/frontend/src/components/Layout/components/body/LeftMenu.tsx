@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { IRootState } from 'apps/frontend/src/store';
 import { getAllInvoices } from 'apps/frontend/src/store/reducers/invoice.reducer';
 import SearchIcon from 'apps/frontend/src/assets/search-icon.png';
+import { calculateShares } from 'apps/frontend/src/utils/calculations';
 
 const LeftMenuStyled = styled.div`
   width: 25%;
@@ -102,26 +103,34 @@ function LeftMenu(props: ILeftMenuProps) {
       </Search>
       <InvoiceCount>Invoices: {props.totalNumberOfRecords}</InvoiceCount>
       <InvoiceList>
-        <InvoiceBrick>
-          <div>
-            <InvoiceNumber>INV.#-1222</InvoiceNumber>
-            <InvoiceDate>{new Date().toDateString()}</InvoiceDate>
-          </div>
-          <div>
-            <NumberOfItems>Items - 05</NumberOfItems>
-          </div>
-          <div>
-            <CustomerName>cutomer name</CustomerName>
-            <GrandTotal>$ 12145</GrandTotal>
-          </div>
-        </InvoiceBrick>
+        {props.invoiceList.map((invoice) => {
+          const [subTotal, discountAmount, taxAmount, grandTotal] =
+            calculateShares(invoice);
+          return (
+            <InvoiceBrick>
+              <div>
+                <InvoiceNumber>{invoice.invoiceNumber}</InvoiceNumber>
+                <InvoiceDate>
+                  {new Date(invoice.created_at).toDateString()}
+                </InvoiceDate>
+              </div>
+              <div>
+                <NumberOfItems>Items - {invoice.products.length}</NumberOfItems>
+              </div>
+              <div>
+                <CustomerName>{invoice.customer?.fullName}</CustomerName>
+                <GrandTotal>$ {grandTotal}</GrandTotal>
+              </div>
+            </InvoiceBrick>
+          );
+        })}
       </InvoiceList>
     </LeftMenuStyled>
   );
 }
 
 const mapStateToProps = (state: IRootState) => ({
-  currentInvoice: state.invoice.currentInvoice,
+  invoiceList: state.invoice.invoiceList,
   totalNumberOfRecords: state.invoice.totalNumberOfRecords,
 });
 
